@@ -2,12 +2,13 @@ const CACHE_NAME = 'urlaubsapp-v1';
 const FILES_TO_CACHE = [
   './',
   './index.html',
+  './style.css',
+  './script.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
 ];
 
-// Beim Installieren alle Dateien herunterladen und cachen
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -17,7 +18,6 @@ self.addEventListener('install', event => {
   );
 });
 
-// Bei jeder Anfrage: zuerst im Cache nachsehen, sonst online laden
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
@@ -26,7 +26,6 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Alte Caches löschen, wenn eine neue Version kommt
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keyList =>
